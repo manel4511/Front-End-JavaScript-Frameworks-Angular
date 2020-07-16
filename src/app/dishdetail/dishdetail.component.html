@@ -27,8 +27,7 @@
       </mat-card>
     </div>
   
-
-  <div fxFlex="40">
+    <div fxFlex *ngIf="dishes">
    <mat-list *ngIf="dish">
      <h3>Comments</h3>
      <mat-list-item *ngFor="let comment of dish.comments">
@@ -43,5 +42,7 @@
 
  
   </div>
-
+  <div [hidden]="leaders">
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
 </div>
