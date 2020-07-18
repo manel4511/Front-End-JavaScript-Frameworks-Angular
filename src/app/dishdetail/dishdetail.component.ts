@@ -36,10 +36,12 @@ export class DishdetailComponent implements OnInit {
   validationMessages = {
     'comment': {
       'required':      'Comment is required.',
+      'minlength':     'Comment must be at least 1 characters long.'
     },
     'author': {
       'required':      ' Author Name is required.',
-      'minlength':     'Author Name must be at least two characters long.'
+      'minlength':     'Author Name must be at least two characters long.',
+      'maxlength':     'Author Name cannot be more than 25 characters long.'
     },
   };
   constructor(private dishservice: DishService,
@@ -56,7 +58,7 @@ export class DishdetailComponent implements OnInit {
   // this.dishservice.getDish(vare).subscribe(dish => this.dish = dish); // with observable
 
    this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
-   this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['num'])))
+   this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
 
 
@@ -73,7 +75,7 @@ export class DishdetailComponent implements OnInit {
   createForm(){
     this.commentForm = this.fb.group({
       rating: 5,
-      comment: ['', [Validators.required] ],
+      comment: ['', [Validators.required,  Validators.minLength(1)] ],
       author: ['', [Validators.required, Validators.minLength(2)] ],
     });
     this.commentForm.valueChanges
@@ -103,14 +105,14 @@ export class DishdetailComponent implements OnInit {
   }
   onSubmit() {
     this.comment = this.commentForm.value;   // data model = form model
+    this.comment.date = new Date().toISOString();
+    this.dish.comments.push(this.comment);
     console.log(this.comment);
-    this.commentForm.reset();
     this.commentForm.reset({
       rating: 5,
       comment: '',
       author: '',
     });
-    this.commentFormDirective.resetForm();
 
   }
 
