@@ -31,9 +31,13 @@ import { DishService } from './services/dish.service';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { PromotionService } from './services/promotion.service';
+
 import { LeaderService } from './services/leader.service';
 import { LoginComponent } from './login/login.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+import { baseURL } from './shared/baseurl';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
 @NgModule({
   declarations: [
@@ -66,13 +70,23 @@ import { LoginComponent } from './login/login.component';
     MatSlideToggleModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
-    MatSliderModule
+    MatSliderModule,
+    HttpClientModule ,
+    HttpModule 
   ],
   entryComponents: [
     LoginComponent
 ],
   providers: [DishService ,
-     PromotionService ,LeaderService],
+     PromotionService ,
+     LeaderService,
+     ProcessHTTPMsgService,
+    
+      {provide: 'BaseURL', useValue: baseURL}
+      
+    ],
+     
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }
