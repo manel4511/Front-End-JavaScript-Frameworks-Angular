@@ -16,13 +16,13 @@ export class LeaderService {
   constructor(private http: HttpClient) { }
 
    getLeaders(): Observable<Leader[]> {
-    return this.http.get<Leader[]>(baseURL + 'leaders');
+    return this.http.get<Leader[]>(baseURL + 'leadership');
   }
 
   
 
   getFeaturedLeader(): Observable<Leader> {
-    return this.http.get<Leader[]>(baseURL + 'leaders?featured=true').pipe(map(leaders => leaders[0]));
+    return this.http.get<Leader[]>(baseURL + 'leadership?featured=true').pipe(map(leaders => leaders[0]));
   }
 
  
